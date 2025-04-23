@@ -32,13 +32,21 @@ export const getPizzasList =
     }
   };
 
-export const addPizza = (values) => async (dispatch, getState) => {
+export const addPizza = (formData) => async (dispatch, getState) => {
   try {
     dispatch({
       type: PizzaActionTypes.ADD.REQUEST,
     });
 
-    await axios.post(BASE_URL + `/api/pizzas/`, values, getConfig(getState()));
+    // Note: don't set Content-Type header when sending FormData
+    const config = {
+      headers: {
+        Authorization: `Bearer ${getState().users.login.user_login.token}`,
+      },
+    };
+
+    const res = await axios.post(BASE_URL + `/api/pizzas/`, formData, config);
+    console.log("res", res);
 
     dispatch({
       type: PizzaActionTypes.ADD.SUCCESS,
@@ -106,17 +114,19 @@ export const getPizzaDetails = (id) => async (dispatch, getState) => {
   }
 };
 
-export const editPizza = (id, values) => async (dispatch, getState) => {
+export const editPizza = (id, formData) => async (dispatch, getState) => {
   try {
     dispatch({
       type: PizzaActionTypes.EDIT.REQUEST,
     });
 
-    await axios.put(
-      BASE_URL + `/api/pizzas/edit/${id}`,
-      values,
-      getConfig(getState())
-    );
+    const config = {
+      headers: {
+        Authorization: `Bearer ${getState().users.login.user_login.token}`,
+      },
+    };
+
+    await axios.put(BASE_URL + `/api/pizzas/edit/${id}`, formData, config);
 
     dispatch({
       type: PizzaActionTypes.EDIT.SUCCESS,

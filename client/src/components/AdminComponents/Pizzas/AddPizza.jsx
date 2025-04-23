@@ -50,9 +50,23 @@ function AddPizza({ history }) {
 
   const formik = useFormik({
     initialValues: initialPizzaValues,
-    validationSchema: pizzaSchema,
+    // validationSchema: pizzaSchema,
     onSubmit: (values) => {
-      dispatch(addPizza(values));
+      const formData = new FormData();
+      formData.append("name", values.name);
+      formData.append("category", values.category);
+      formData.append("priceSmall", values.priceSmall);
+      formData.append("priceMedium", values.priceMedium);
+      formData.append("priceLarge", values.priceLarge);
+      formData.append("description", values.description);
+
+      if (values.image) {
+        formData.append("image", values.image);
+      } else if (values.imageUrl) {
+        formData.append("imageUrl", values.imageUrl);
+      }
+
+      dispatch(addPizza(formData));
     },
   });
 

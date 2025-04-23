@@ -1,11 +1,15 @@
 const express = require("express");
 const router = express.Router();
 const pizzaController = require("../controllers/pizza.controller");
+const upload = require("../middleware/multerUpload");
 
-router.get("/getPizzas", pizzaController.getPizzasList);
-router.post("/", pizzaController.registerPizza);
+// Routes with multer middleware
+router.post("/", upload.single("image"), pizzaController.registerPizza);
+router.put("/edit/:pizzaId", upload.single("image"), pizzaController.editPizza);
+
+// Other routes
+router.get("/getPizzas/:keyword?", pizzaController.getPizzasList);
 router.post("/deletePizzas", pizzaController.deletePizzas);
-router.put("/edit/:pizzaId", pizzaController.editPizza);
 router.get("/:pizzaId", pizzaController.getPizzaDetails);
 
 module.exports = router;

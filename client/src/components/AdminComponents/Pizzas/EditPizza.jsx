@@ -78,7 +78,21 @@ function EditPizza({ history, match }) {
     initialValues: initialPizzaValues,
     validationSchema: pizzaSchema,
     onSubmit: (values) => {
-      dispatch(editPizza(pizzaId, values));
+      const formData = new FormData();
+      formData.append("name", values.name);
+      formData.append("category", values.category);
+      formData.append("priceSmall", values.priceSmall);
+      formData.append("priceMedium", values.priceMedium);
+      formData.append("priceLarge", values.priceLarge);
+      formData.append("description", values.description);
+
+      if (values.image) {
+        formData.append("image", values.image);
+      } else if (values.imageUrl) {
+        formData.append("imageUrl", values.imageUrl);
+      }
+
+      dispatch(editPizza(pizzaId, formData));
     },
   });
 
