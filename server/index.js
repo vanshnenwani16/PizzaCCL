@@ -11,13 +11,7 @@ dotenv.config({ silent: process.env.NODE_ENV === "production" });
 app.use(require("morgan")("tiny")); // Log API method details
 app.use(express.json());
 // app.use(cors({ "*": true })); // Allow all origins
-app.use(
-  cors({
-    origin: "http://localhost:3000", // Allow only your frontend
-    methods: ["GET", "POST", "PUT", "DELETE"], // Allowed HTTP methods
-    credentials: true, // Allow cookies
-  })
-);
+app.use(cors());
 // app.options("*", cors());
 app.use(require("./helpers/jwt")()); // Protect API Authentication
 // app.use(require("./helpers/errorhandler"));
