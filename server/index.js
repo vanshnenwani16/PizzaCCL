@@ -20,7 +20,7 @@ app.use(
 );
 // app.options("*", cors());
 app.use(require("./helpers/jwt")()); // Protect API Authentication
-app.use(require("./helpers/errorhandler"));
+// app.use(require("./helpers/errorhandler"));
 
 const port = process.env.PORT || 9090;
 app.get("/", (req, res) => {

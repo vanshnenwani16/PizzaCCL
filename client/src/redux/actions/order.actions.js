@@ -3,7 +3,7 @@ import axios from "axios";
 import { getConfig } from "../settings";
 
 // const BASE_URL = "https://pizza-ecommerce-backend-excoccur-gmailcom.vercel.app";
-const BASE_URL = "http://localhost:9090";
+const BASE_URL = "http://51.20.92.252:9090";
 
 export const addUserOrder = (values) => async (dispatch) => {
   try {
